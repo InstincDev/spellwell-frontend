@@ -1,3 +1,4 @@
+import styles from './ExampleAtom.module.scss'
 export function ExampleAtom ({text = "Default ExampleAtom Text"}){
-    return <div><p>{text}</p></div>
+    return <div className={styles.ExampleAtom}><p>{text}</p></div>
 }
