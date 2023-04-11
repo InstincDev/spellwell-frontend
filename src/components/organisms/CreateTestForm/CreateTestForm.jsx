@@ -11,33 +11,34 @@ const CHALLENGE_WORD_LENGTH = 1;
 export function CreateTestForm() {
     const [baseWordLists, setBaseWordLists] = useState([]);
     const [challengeWordLists, setChallengeWordLists] = useState([]);
-    
-    const [formSubmitBaseWordError, setFormSubmitBaseWordError] = useState(null)
-    const [formSubmitChallengeWordError, setFormSubmitChallengeWordError] = useState(null)
+
+    const [formSubmitBaseWordError, setFormSubmitBaseWordError] =
+        useState(null);
+    const [formSubmitChallengeWordError, setFormSubmitChallengeWordError] =
+        useState(null);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         // check if baseWordList && challengeWordList are of correct length
-            // if baseWordList is not of length -> show InputToolTip w/ message
-            // if challengeWordList is not of length -> show InputToolTip w/ message
+        // if baseWordList is not of length -> show InputToolTip w/ message
+        // if challengeWordList is not of length -> show InputToolTip w/ message
 
-        if(
-            baseWordLists.length !== BASE_WORD_LENGTH || 
+        if (
+            baseWordLists.length !== BASE_WORD_LENGTH ||
             challengeWordLists.length !== CHALLENGE_WORD_LENGTH
-            ){
-                if(baseWordLists.length > BASE_WORD_LENGTH){
-                    setFormSubmitBaseWordError("Too Many Base Words")
-                }
-                if(baseWordLists.length < BASE_WORD_LENGTH){
-                    setFormSubmitBaseWordError("Too Few Base Words")
-                }
-                if(challengeWordLists.length > CHALLENGE_WORD_LENGTH){
-                    setFormSubmitChallengeWordError("Too Many Challenge Words")
-                }
-                if(challengeWordLists.length < CHALLENGE_WORD_LENGTH){
-                    setFormSubmitChallengeWordError("Too Few Challenge Words")
-                }
-
+        ) {
+            if (baseWordLists.length > BASE_WORD_LENGTH) {
+                setFormSubmitBaseWordError("Too Many Base Words");
+            }
+            if (baseWordLists.length < BASE_WORD_LENGTH) {
+                setFormSubmitBaseWordError("Too Few Base Words");
+            }
+            if (challengeWordLists.length > CHALLENGE_WORD_LENGTH) {
+                setFormSubmitChallengeWordError("Too Many Challenge Words");
+            }
+            if (challengeWordLists.length < CHALLENGE_WORD_LENGTH) {
+                setFormSubmitChallengeWordError("Too Few Challenge Words");
+            }
         }
     };
     /*
@@ -47,21 +48,27 @@ export function CreateTestForm() {
 
     function addBaseWord(baseWordObj) {
         setBaseWordLists([...baseWordLists, baseWordObj]);
-        setFormSubmitBaseWordError(null)
+        setFormSubmitBaseWordError(null);
     }
 
     function addChallengeWord(challengeWordObj) {
         setChallengeWordLists([...challengeWordLists, challengeWordObj]);
-        setFormSubmitChallengeWordError(null)
+        setFormSubmitChallengeWordError(null);
     }
 
     return (
         <form onSubmit={handleSubmit}>
             <h2>Base</h2>
-            {formSubmitBaseWordError && <InputToolTip message = {formSubmitBaseWordError}/>}
+            {formSubmitBaseWordError && (
+                <InputToolTip message={formSubmitBaseWordError} />
+            )}
+            <WordList wordList={baseWordLists} />
             <BaseWordsInput addBaseWord={addBaseWord} />
             <h2>Challenge</h2>
-           {formSubmitChallengeWordError && <InputToolTip message = {formSubmitChallengeWordError}/>}
+            {formSubmitChallengeWordError && (
+                <InputToolTip message={formSubmitChallengeWordError} />
+            )}
+            <WordList wordList={challengeWordLists} />
             <ChallengeWordsInput addChallengeWord={addChallengeWord} />
 
             <button type="submit">Form Submit</button>
@@ -103,7 +110,8 @@ function BaseWordsInput({ addBaseWord }) {
         if (
             submittedWordInputError !== null ||
             submittedSentenceInputError !== null
-        )return;
+        )
+            return;
 
         const cleanSentence = sentence.trim();
         const cleanWord = word
@@ -164,7 +172,6 @@ function BaseWordsInput({ addBaseWord }) {
     );
 }
 
-
 function ChallengeWordsInput({ addChallengeWord }) {
     const [challengeWord, setChallengeWord] = useState("");
     const [challengeSentence, setChallengeSentence] = useState("");
@@ -185,10 +192,10 @@ function ChallengeWordsInput({ addChallengeWord }) {
                 setSubmittedChallengeSentenceInputError("Empty Sentence");
             return;
         }
-        
+
         let splitChallengeWord = challengeWord.split("");
         let splitChallengeSentence = challengeSentence.split("");
-        
+
         {
             for (let i = 0; i < splitChallengeWord.length; i++) {
                 console.log(splitChallengeWord[i]);
@@ -242,7 +249,7 @@ function ChallengeWordsInput({ addChallengeWord }) {
         setSubmittedChallengeSentenceInputError(null);
         setChallengeSentence(value);
     };
-    
+
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <label htmlFor="challengeWord">
@@ -283,4 +290,17 @@ function ChallengeWordsInput({ addChallengeWord }) {
 
 function InputToolTip({ message }) {
     return <span>{message}</span>;
+}
+
+function WordList({ wordList }) {
+    return (
+        <ul>
+            {wordList.map(({ word, sentence }, i) => (
+                <li key={`wordList-${i}`}>
+                    <p>word:{word}</p>
+                    <p>sentence:{sentence}</p>
+                </li>
+            ))}
+        </ul>
+    );
 }
