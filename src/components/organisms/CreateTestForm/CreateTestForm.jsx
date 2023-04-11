@@ -4,32 +4,64 @@ import { AddWords } from "../../";
     TODO:
         refactor
         validate - base and challenge array length
+        correct component name of InputToolTip 
 */
+const BASE_WORD_LENGTH = 2;
+const CHALLENGE_WORD_LENGTH = 1;
 export function CreateTestForm() {
+    const [baseWordLists, setBaseWordLists] = useState([]);
+    const [challengeWordLists, setChallengeWordLists] = useState([]);
+    
+    const [formSubmitBaseWordError, setFormSubmitBaseWordError] = useState(null)
+    const [formSubmitChallengeWordError, setFormSubmitChallengeWordError] = useState(null)
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        // check if baseWordList && challengeWordList are of correct length
+            // if baseWordList is not of length -> show InputToolTip w/ message
+            // if challengeWordList is not of length -> show InputToolTip w/ message
+
+        if(
+            baseWordLists.length !== BASE_WORD_LENGTH || 
+            challengeWordLists.length !== CHALLENGE_WORD_LENGTH
+            ){
+                if(baseWordLists.length > BASE_WORD_LENGTH){
+                    setFormSubmitBaseWordError("Too Many Base Words")
+                }
+                if(baseWordLists.length < BASE_WORD_LENGTH){
+                    setFormSubmitBaseWordError("Too Few Base Words")
+                }
+                if(challengeWordLists.length > CHALLENGE_WORD_LENGTH){
+                    setFormSubmitChallengeWordError("Too Many Challenge Words")
+                }
+                if(challengeWordLists.length < CHALLENGE_WORD_LENGTH){
+                    setFormSubmitChallengeWordError("Too Few Challenge Words")
+                }
+
+        }
     };
     /*
     Data structure for Base & Challenge
     [{word: "", sentence: ""}]
     */
 
-    const [baseWordLists, setBaseWordLists] = useState([]);
-    const [challengeWordLists, setChallengeWordLists] = useState([]);
-
     function addBaseWord(baseWordObj) {
         setBaseWordLists([...baseWordLists, baseWordObj]);
+        setFormSubmitBaseWordError(null)
     }
 
     function addChallengeWord(challengeWordObj) {
         setChallengeWordLists([...challengeWordLists, challengeWordObj]);
+        setFormSubmitChallengeWordError(null)
     }
 
     return (
         <form onSubmit={handleSubmit}>
             <h2>Base</h2>
+            {formSubmitBaseWordError && <InputToolTip message = {formSubmitBaseWordError}/>}
             <BaseWordsInput addBaseWord={addBaseWord} />
             <h2>Challenge</h2>
+           {formSubmitChallengeWordError && <InputToolTip message = {formSubmitChallengeWordError}/>}
             <ChallengeWordsInput addChallengeWord={addChallengeWord} />
 
             <button type="submit">Form Submit</button>
