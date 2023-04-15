@@ -14,6 +14,7 @@ export function CreateTestForm() {
 
     const [formSubmitBaseWordError, setFormSubmitBaseWordError] =
         useState(null);
+
     const [formSubmitChallengeWordError, setFormSubmitChallengeWordError] =
         useState(null);
 
@@ -40,12 +41,17 @@ export function CreateTestForm() {
                 setFormSubmitChallengeWordError("Too Few Challenge Words");
             }
         }
+
+        if (formSubmitBaseWordError || formSubmitChallengeWordError) {
+            console.log("we have an ERROR");
+            return
+        }
+        console.log("NO errors!");
     };
     /*
     Data structure for Base & Challenge
     [{word: "", sentence: ""}]
     */
-
     function addBaseWord(baseWordObj) {
         setBaseWordLists([...baseWordLists, baseWordObj]);
         setFormSubmitBaseWordError(null);
@@ -56,19 +62,43 @@ export function CreateTestForm() {
         setFormSubmitChallengeWordError(null);
     }
 
+    /*
+    Remove word obj from the base State arr
+    // get baseWordsList
+        // get obj at passed index
+        // 
+
+    */
+    function deleteBaseWord(index) {
+        let arr = [...baseWordLists];
+        arr.splice(index, 1);
+        setBaseWordLists(arr);
+        setFormSubmitBaseWordError(null);
+    }
+
+    function deleteChallengeWord(index) {
+        let arr = [...challengeWordLists];
+        arr.splice(index, 1);
+        setChallengeWordLists(arr);
+        setFormSubmitChallengeWordError(null);
+    }
+
     return (
         <form onSubmit={handleSubmit}>
             <h2>Base</h2>
             {formSubmitBaseWordError && (
                 <InputToolTip message={formSubmitBaseWordError} />
             )}
-            <WordList wordList={baseWordLists} />
+            <WordList wordList={baseWordLists} deleteWord={deleteBaseWord} />
             <BaseWordsInput addBaseWord={addBaseWord} />
             <h2>Challenge</h2>
             {formSubmitChallengeWordError && (
                 <InputToolTip message={formSubmitChallengeWordError} />
             )}
-            <WordList wordList={challengeWordLists} />
+            <WordList
+                wordList={challengeWordLists}
+                deleteWord={deleteChallengeWord}
+            />
             <ChallengeWordsInput addChallengeWord={addChallengeWord} />
 
             <button type="submit">Form Submit</button>
@@ -232,8 +262,8 @@ function ChallengeWordsInput({ addChallengeWord }) {
         splitChallengeSentence = splitChallengeSentence.join("").trim();
 
         addChallengeWord({
-            challengeWord: splitChallengeWord,
-            challengeSentence: splitChallengeSentence,
+            word: splitChallengeWord,
+            sentence: splitChallengeSentence,
         });
         setChallengeWord("");
         setChallengeSentence("");
@@ -292,13 +322,20 @@ function InputToolTip({ message }) {
     return <span>{message}</span>;
 }
 
-function WordList({ wordList }) {
+function WordList({ wordList, deleteWord }) {
+    function handleOnClick(index) {
+        deleteWord(index);
+    }
+
     return (
         <ul>
             {wordList.map(({ word, sentence }, i) => (
                 <li key={`wordList-${i}`}>
                     <p>word:{word}</p>
                     <p>sentence:{sentence}</p>
+                    <button type="button" onClick={() => handleOnClick(i)}>
+                        Delete
+                    </button>
                 </li>
             ))}
         </ul>
