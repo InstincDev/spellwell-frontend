@@ -10,12 +10,14 @@ import { AddWords, WordInput } from "../../";
 */
 const BASE_WORD_LENGTH = 2;
 const CHALLENGE_WORD_LENGTH = 1;
+
+
 export function CreateTestForm() {
+    // WORD LIST STATE
     const [baseWordList, setBaseWordList] = useState([]);
     const [challengeWordList, setChallengeWordList] = useState([]);
-
+    // ERROR STATE
     const [formBaseWordError, setFormBaseWordError] = useState(null);
-
     const [formChallengeWordError, setFormChallengeWordError] = useState(null);
 
     const handleSubmit = (event) => {
@@ -24,11 +26,14 @@ export function CreateTestForm() {
         // if baseWordList is not of length -> show InputToolTip w/ message
         // if challengeWordList is not of length -> show InputToolTip w/ message
 
-        // Check the base and challenege word list length and set error state string if either list length is wrong
+        let isError = false;
+
+        // Check the base and challenge word list length and set error state string if either list length is wrong
         if (
             baseWordList.length !== BASE_WORD_LENGTH ||
             challengeWordList.length !== CHALLENGE_WORD_LENGTH
         ) {
+            isError = false;
             if (baseWordList.length > BASE_WORD_LENGTH) {
                 setFormBaseWordError("Too Many Base Words");
             }
@@ -42,8 +47,8 @@ export function CreateTestForm() {
                 setFormChallengeWordError("Too Few Challenge Words");
             }
         }
-        // Short circut if any of the lists ha
-        if (formBaseWordError || formChallengeWordError) {
+        // Short circuit if any of the lists have an error
+        if (isError) {
             console.log("we have an ERROR");
             return;
         }
