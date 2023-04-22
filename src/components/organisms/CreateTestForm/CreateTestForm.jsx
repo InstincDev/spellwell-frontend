@@ -24,6 +24,7 @@ export function CreateTestForm() {
         // if baseWordList is not of length -> show InputToolTip w/ message
         // if challengeWordList is not of length -> show InputToolTip w/ message
 
+        // Check the base and challenege word list length and set error state string if either list length is wrong
         if (
             baseWordList.length !== BASE_WORD_LENGTH ||
             challengeWordList.length !== CHALLENGE_WORD_LENGTH
@@ -41,18 +42,13 @@ export function CreateTestForm() {
                 setFormChallengeWordError("Too Few Challenge Words");
             }
         }
-
+        // Short circut if any of the lists ha
         if (formBaseWordError || formChallengeWordError) {
             console.log("we have an ERROR");
             return;
         }
-
-        console.log("NO errors!");
-    };
-    /*
-    Data structure for Base & Challenge
-    [{word: "", sentence: ""}]
-    */
+    }
+  
     function addBaseWord(baseWordObj) {
         setBaseWordList([...baseWordList, baseWordObj]);
         setFormBaseWordError(null);
@@ -63,13 +59,6 @@ export function CreateTestForm() {
         setFormChallengeWordError(null);
     }
 
-    /*
-    Remove word obj from the base State arr
-    // get baseWordsList
-        // get obj at passed index
-        // 
-
-    */
     function deleteBaseWord(index) {
         let arr = [...baseWordList];
         arr.splice(index, 1);
