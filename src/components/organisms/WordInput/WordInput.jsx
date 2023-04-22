@@ -60,7 +60,10 @@ export function WordInput({
                     break;
                 }
             } 
-            
+           // This check will fail, because the update for state hasn't triggered an update yet
+           // We should manuaully set a variable in the scope of handle submit or within the for loop block
+                // to do the below if check, as opposed to checking a state
+           // Maybe we break each block into their own functions.
            if (
             wordInputError !== null ||
             sentenceInputError !== null
@@ -79,7 +82,7 @@ export function WordInput({
 
         // handleSubmit made it this far without a short circut.
         // If all else fails and we cant get the short circut to work
-        // we can always throw a check statement here to only run this if errors are null.
+            // we can always throw a check statement here to only run this if errors are null.
         {
             // Add word struct to word list/array
             // Then reset the work inputs to empty
