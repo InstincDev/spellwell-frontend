@@ -76,7 +76,7 @@ export function WordInput({
         // handleSubmit made it this far without a short circuit.
         // If all else fails and we cant get the short circuit to work
             // we can always throw a check statement here to only run this if errors are null.
-        handleAddWord(splitWord, splitSentence)
+     handleAddWord(splitWord, splitSentence)
     
     };
     

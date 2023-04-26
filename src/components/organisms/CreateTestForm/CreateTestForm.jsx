@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { AddWords, WordInput } from "../../";
+import { postTest } from "../../../utils/serverRequest";
 
 /*
     TODO:
-         - refactor
-         - validate - base and challenge array length
-         - correct component name of InputToolTip
-         - word or sentence allows numbers to be pushed to list but also shows error 
+         - Validate :)
+            - Title string length
 */
+
 const BASE_WORD_LENGTH = 2;
 const CHALLENGE_WORD_LENGTH = 1;
-
+const TEACHERID = "64441ddc819c4a0efbd2e075";
 
 export function CreateTestForm() {
+    // TITLE STATE
+    const [testTitle, setTestTitle] = useState("");
     // WORD LIST STATE
     const [baseWordList, setBaseWordList] = useState([]);
     const [challengeWordList, setChallengeWordList] = useState([]);
@@ -20,7 +22,7 @@ export function CreateTestForm() {
     const [formBaseWordError, setFormBaseWordError] = useState(null);
     const [formChallengeWordError, setFormChallengeWordError] = useState(null);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         // check if baseWordList && challengeWordList are of correct length
         // if baseWordList is not of length -> show InputToolTip w/ message
@@ -52,8 +54,16 @@ export function CreateTestForm() {
             console.log("we have an ERROR");
             return;
         }
-    }
-  
+
+        // Post request
+        await postTest({
+            title: testTitle,
+            baseWords: baseWordList,
+            challengeWords: challengeWordList,
+            teacherId: TEACHERID,
+        });
+    };
+
     function addBaseWord(baseWordObj) {
         setBaseWordList([...baseWordList, baseWordObj]);
         setFormBaseWordError(null);
@@ -80,6 +90,10 @@ export function CreateTestForm() {
 
     return (
         <form onSubmit={handleSubmit}>
+            <label htmlFor="title">
+                Test Title
+                <input type="title" name="title" onChange={(e)=> setTestTitle(e.target.value)} value={testTitle}/>
+            </label>
             <WordInput
                 title={"Base"}
                 formWordError={formBaseWordError}
