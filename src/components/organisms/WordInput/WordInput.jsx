@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { InputToolTip } from "../../atoms";
 import { WordList } from "../../molecules";
+import {word_input, word_submit_button} from "./WordInput.module.sass"
 
 /* 
     TODO:
@@ -101,13 +102,14 @@ export function WordInput({
     };
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <div className={word_input}>
              <h2>{title}</h2>
              {formWordError && (
                 <InputToolTip message={formWordError} />
             )}
             <WordList wordList={wordList} deleteWord={deleteWord} />
             <label htmlFor="word">
+                
                 {wordInputError && (
                     <InputToolTip message={wordInputError} />
                 )}
@@ -133,7 +135,7 @@ export function WordInput({
                     onChange={handleSentenceOnChange}
                 />
             </label>
-            <button type="button" onClick={handleWordOnSubmit}>
+            <button className={word_submit_button} type="button" onClick={handleWordOnSubmit}>
             {`${title} Submit`}
             </button>
         </div>

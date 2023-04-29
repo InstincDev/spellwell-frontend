@@ -1,14 +1,16 @@
+import {word_list, delete_word} from "./WordList.module.sass"
+
 export function WordList({ wordList, deleteWord }) {
     function handleOnClick(index) {
         deleteWord(index);
     }
     return (
-        <ul>
+        <ul className={word_list}>
             {wordList.map(({ word, sentence }, i) => (
                 <li key={`wordList-${i}`}>
-                    <p>word:{word}</p>
-                    <p>sentence:{sentence}</p>
-                    <button type="button" onClick={() => handleOnClick(i)}>
+                    <p>Word: {word}</p>
+                    <p>Sentence: {sentence}</p>
+                    <button  className={delete_word} type="button" onClick={() => handleOnClick(i)}>
                         Delete
                     </button>
                 </li>
