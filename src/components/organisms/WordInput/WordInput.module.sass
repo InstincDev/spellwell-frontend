@@ -1,33 +1,46 @@
 .word_input 
-    border: solid black
-    width: 223px
+    min-width: 100%
+    max-width: 100%
+    padding: 1.5rem 1rem
     display: flex
     flex-direction: column
     place-items: center
     gap: 0.5rem
-    color: blue
-
+    background-color: grey
+   
+    -webkit-box-shadow: 10px 10px 17px -7px rgba(0,0,0,0.75)
+    -moz-box-shadow: 10px 10px 17px -7px rgba(0,0,0,0.75)
+    box-shadow: 10px 10px 17px -7px rgba(0,0,0,0.75)
+    
     label
         display: flex
         flex-direction: column
         width: 100%
         gap: 1rem
-        color: red
 
         input
-            height: 1.5rem
+            height: 2rem
             text-align: center
+            font-size: 1rem
+            letter-spacing: 0.03rem
             border-radius: 5px
-    
+            outline: none
+
+        input:focus
+            border: 2px solid #0d6efd
+
 .word_submit_button
-    width: 9rem
-    padding: 0.5rem 0
-    background-color: green
+    padding: 0.5rem 1rem
+    font-size: 1rem
+    letter-spacing: 0.03rem
+    border-radius: 5rem
+    background: linear-gradient(135deg, hsla(216, 98%, 52%, 1) 0%, hsla(189, 90%, 50%, 1) 50%, hsla(216, 98%, 52%, 1) 100%)
 
 .word_submit_button:hover
-    background-color: yellow
+    background: radial-gradient(circle, hsla(189, 90%, 50%, 1) 0%, hsla(216, 98%, 52%, 1) 100%, hsla(192, 90%, 50%, 1) 100%)
+   
     
 .word_submit_button:active
-    background-color: red
+    background: linear-gradient(135deg, hsla(189, 90%, 50%, 1) 0%, hsla(216, 98%, 52%, 1) 50%, hsla(192, 90%, 50%, 1) 100%)
     
             

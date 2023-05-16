@@ -1,4 +1,4 @@
  export function InputToolTip({ message }) {
-    return <span>{message}</span>;
+    return <span style={{color:"#ff0010"}}>{message}</span>;
 }
 

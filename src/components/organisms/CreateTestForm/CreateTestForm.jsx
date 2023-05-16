@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AddWords, WordInput } from "../../";
 import { postTest } from "../../../utils/serverRequest";
+import{create_test_form, form_submit} from "./CreateTestForm.module.sass"
 
 /*
     TODO:
@@ -90,10 +91,10 @@ export function CreateTestForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className={create_test_form} onSubmit={handleSubmit}>
             <label htmlFor="title">
                 Test Title
-                <input type="title" name="title" onChange={(e)=> setTestTitle(e.target.value)} value={testTitle}/>
+                <input type="title" name="title" placeholder="Title" onChange={(e)=> setTestTitle(e.target.value)} value={testTitle}/>
             </label>
             <WordInput
                 title={"Base"}
@@ -111,7 +112,7 @@ export function CreateTestForm() {
                 deleteWord={deleteChallengeWord}
             />
 
-            <button type="submit">Form Submit</button>
+            <button className={form_submit} type="submit">Form Submit</button>
         </form>
     );
 }
