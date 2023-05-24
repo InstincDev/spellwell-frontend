@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AddWords, WordInput } from "../../";
 import { postTest } from "../../../utils/serverRequest";
-import{create_test_form, form_submit} from "./CreateTestForm.module.sass"
+import{create_test_form, form_head, form_label, form_submit} from "../../../styling/form.module.sass"
 
 /*
     TODO:
@@ -92,7 +92,7 @@ export function CreateTestForm() {
 
     return (
         <form className={create_test_form} onSubmit={handleSubmit}>
-            <label htmlFor="title">
+            <label htmlFor="title" className={form_label}>
                 Test Title
                 <input type="title" name="title" placeholder="Title" onChange={(e)=> setTestTitle(e.target.value)} value={testTitle}/>
             </label>
