@@ -3,7 +3,6 @@ import { form_label } from "../../../styling/form.module.sass";
 
 export function BaseInput({
     name,
-    ClassName,
     type,
     placeholder,
     onChange,
@@ -21,6 +20,8 @@ export function BaseInput({
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
+                minLength="1"
+                required
             />
             {/* {type == "password" && (
                 <button

@@ -20,11 +20,21 @@ export function CreateUserForm(){
     const [userEmail, setUserEmail] = useState("")
     const [userPassword, setUserPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
-    const [userClassId, setUserClassId] = useState("")
+    // const [userClassId, setUserClassId] = useState("")
 
     function handleSubmit(e){
         e.preventDefault()
+        // Smile
+        // state error handling
+            // all exist
+        // package state values
+        // fetch to backend with data
+
         console.log("Submitted");
+    }
+
+    function filterState(){
+
     }
     
     function handleInput(e){
@@ -42,8 +52,6 @@ export function CreateUserForm(){
         }
     }
 
-
-
     return(
         <form onSubmit={handleSubmit} className={create_test_form}>
             <h3 className={form_head}>
@@ -51,7 +59,6 @@ export function CreateUserForm(){
             </h3>
             <div className={base_input_wrapper}>
 
-            
                 <BaseInput
                     className={form_label}
                     type="text"
@@ -81,13 +88,13 @@ export function CreateUserForm(){
                     placeholder="Confirm Password"
                     onChange={handleInput} value={confirmPassword}
                 />
-                <BaseInput
+                {/* <BaseInput
                     className={form_label}
                     type="text"
                     name={USER_CLASS_ID}
                     placeholder="Class ID"
                     onChange={handleInput} value={userClassId}
-                />
+                /> */}
             </div>
            
             <button type="submit" className={form_button}>Login</button>
