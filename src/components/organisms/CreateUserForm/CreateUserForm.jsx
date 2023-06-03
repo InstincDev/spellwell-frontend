@@ -5,7 +5,7 @@
 // class id
 
 import { useState } from "react";
-import {create_test_form, form_head, form_label, form_submit} from '../../../styling/form.module.sass'
+import {create_test_form, form_head, form_label, form_button, base_input_wrapper} from '../../../styling/form.module.sass'
 import {BaseInput} from '../../'
 
 const USER_NAME= "userName"
@@ -49,6 +49,8 @@ export function CreateUserForm(){
             <h3 className={form_head}>
                 User Login
             </h3>
+            <div className={base_input_wrapper}>
+
             
                 <BaseInput
                     className={form_label}
@@ -86,9 +88,9 @@ export function CreateUserForm(){
                     placeholder="Class ID"
                     onChange={handleInput} value={userClassId}
                 />
-    
+            </div>
            
-            <button type="submit" className={form_submit}>Login</button>
+            <button type="submit" className={form_button}>Login</button>
         </form>
     )
 }

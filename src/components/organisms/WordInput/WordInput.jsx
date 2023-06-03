@@ -2,6 +2,7 @@ import { useState } from "react";
 import { InputToolTip } from "../../atoms";
 import { WordList } from "../../molecules";
 import {word_input, word_submit_button} from "./WordInput.module.sass"
+import {form_label, form_button} from "../../../styling/form.module.sass"
 
 /* 
     TODO:
@@ -108,7 +109,7 @@ export function WordInput({
                 <InputToolTip message={formWordError} />
             )}
             <WordList wordList={wordList} deleteWord={deleteWord} />
-            <label htmlFor="word">
+            <label htmlFor="word" className={form_label}>
                 
                 {wordInputError && (
                     <InputToolTip message={wordInputError} />
@@ -122,7 +123,7 @@ export function WordInput({
                     onChange={handleWordOnChange}
                 />
             </label>
-            <label htmlFor="sentence">
+            <label htmlFor="sentence" className={form_label}>
                 {sentenceInputError && (
                     <InputToolTip message={sentenceInputError} />
                 )}
@@ -135,7 +136,7 @@ export function WordInput({
                     onChange={handleSentenceOnChange}
                 />
             </label>
-            <button className={word_submit_button} type="button" onClick={handleWordOnSubmit}>
+            <button className={form_button} type="button" onClick={handleWordOnSubmit}>
             {`${title} Submit`}
             </button>
         </div>

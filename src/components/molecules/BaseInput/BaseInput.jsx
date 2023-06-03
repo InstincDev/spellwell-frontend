@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { form_label } from "../../../styling/form.module.sass";
 
 export function BaseInput({
     name,
@@ -11,8 +12,8 @@ export function BaseInput({
     const [checkPassword, setCheckPassword] = useState(false);
 
     return (
-        <label htmlFor={name} className={ClassName}>
-            {placeholder}:
+        <label htmlFor={name} className={form_label}>
+            
             <input
                 type={!checkPassword ? type : "text"}
                 name={name}
@@ -21,7 +22,7 @@ export function BaseInput({
                 onChange={onChange}
                 value={value}
             />
-            {type == "password" && (
+            {/* {type == "password" && (
                 <button
                     onClick={() => {
                         setCheckPassword(!checkPassword);
@@ -29,7 +30,7 @@ export function BaseInput({
                 >
                     Show Password
                 </button>
-            )}
+            )} */}
         </label>
     );
 }

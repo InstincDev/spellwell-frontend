@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AddWords, WordInput } from "../../";
 import { postTest } from "../../../utils/serverRequest";
-import{create_test_form, form_head, form_label, form_submit} from "../../../styling/form.module.sass"
+import{create_test_form, form_head, form_label, form_button} from "../../../styling/form.module.sass"
 
 /*
     TODO:
@@ -112,7 +112,7 @@ export function CreateTestForm() {
                 deleteWord={deleteChallengeWord}
             />
 
-            <button className={form_submit} type="submit">Form Submit</button>
+            <button className={form_button} type="submit">Form Submit</button>
         </form>
     );
 }
