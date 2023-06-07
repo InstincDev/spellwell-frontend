@@ -21,7 +21,7 @@ export function BaseInput({
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
-                minLength={name == userInputEnums.USER_PASSWORD? "8": "5"}
+                minLength={name == userInputEnums.USER_PASSWORD || name == userInputEnums.USER_CONFIRM_PASSWORD? "8": "5" }
                 required
             />
             {/* {type == "password" && (

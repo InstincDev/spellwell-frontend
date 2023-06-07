@@ -4,4 +4,5 @@ export default Object.freeze({
     USER_PASSWORD: "userPassword",
     USER_CONFIRM_PASSWORD: "confirmPassword",
     USER_CLASS_ID: "userClassId",
+    USER_TYPE: "userType",
 });

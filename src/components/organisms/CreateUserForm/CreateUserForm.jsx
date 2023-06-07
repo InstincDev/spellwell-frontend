@@ -17,6 +17,7 @@ export function CreateUserForm(){
     const [userPassword, setUserPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     // const [userClassId, setUserClassId] = useState("")
+    const [userType, setUserType] = useState("select")
 
     function handleSubmit(e){
         e.preventDefault()
@@ -26,11 +27,8 @@ export function CreateUserForm(){
         // package state values
         // fetch to backend with data
 
+
         console.log("Submitted");
-    }
-
-    function filterState(){
-
     }
     
     function handleInput(e){
@@ -44,6 +42,8 @@ export function CreateUserForm(){
                 break;
             case userInputEnums.USER_CONFIRM_PASSWORD: setConfirmPassword(value)
                 break;
+            case userInputEnums.USER_TYPE: setUserType(value)
+                break;
             default: console.log("handle input error");
         }
     }
@@ -53,6 +53,15 @@ export function CreateUserForm(){
             <h3 className={form_head}>
                 User Login
             </h3>
+
+            <div className="user_login_type">
+                <select name={userInputEnums.USER_TYPE} id="" onChange={handleInput} value={userType}>
+                    <option value="select" aria-disabled >Select</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="student">Student</option>
+                    <option value="parent">Parent</option>
+                </select>
+            </div>
             <div className={base_input_wrapper}>
 
                 <BaseInput
