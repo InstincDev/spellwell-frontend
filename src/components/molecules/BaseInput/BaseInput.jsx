@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { form_label } from "../../../styling/form.module.sass";
+import userInputEnums from "../../../utils/userInputEnums";
 
 export function BaseInput({
     name,
@@ -20,7 +21,7 @@ export function BaseInput({
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
-                minLength="1"
+                minLength={name == userInputEnums.USER_PASSWORD? "8": "5"}
                 required
             />
             {/* {type == "password" && (

@@ -7,12 +7,8 @@
 import { useState } from "react";
 import {create_test_form, form_head, form_label, form_button, base_input_wrapper} from '../../../styling/form.module.sass'
 import {BaseInput} from '../../'
+import userInputEnums from "../../../utils/userInputEnums";
 
-const USER_NAME= "userName"
-const USER_EMAIL= "userEmail"
-const USER_PASSWORD= "userPassword"
-const USER_CONFIRM_PASSWORD= "confirmPassword"
-const USER_CLASS_ID= "userClassId"
 
 
 export function CreateUserForm(){
@@ -40,13 +36,13 @@ export function CreateUserForm(){
     function handleInput(e){
         const {name, value} = e.target
         switch(name){
-            case USER_NAME: setUserName(value)
+            case userInputEnums.USER_NAME: setUserName(value)
                 break;
-            case USER_EMAIL: setUserEmail(value)
+            case userInputEnums.USER_EMAIL: setUserEmail(value)
                 break;
-            case USER_PASSWORD: setUserPassword(value)
+            case userInputEnums.USER_PASSWORD: setUserPassword(value)
                 break;
-            case USER_CONFIRM_PASSWORD: setConfirmPassword(value)
+            case userInputEnums.USER_CONFIRM_PASSWORD: setConfirmPassword(value)
                 break;
             default: console.log("handle input error");
         }
@@ -62,21 +58,21 @@ export function CreateUserForm(){
                 <BaseInput
                     className={form_label}
                     type="text"
-                    name={USER_NAME}
+                    name={userInputEnums.USER_NAME}
                     placeholder="Full Name"
                     onChange={handleInput} value={userName}
                 />
                 <BaseInput
                     className={form_label}
                     type="email"
-                    name={USER_EMAIL}
+                    name={userInputEnums.USER_EMAIL}
                     placeholder="Email"
                     onChange={handleInput} value={userEmail}
                 />
                 <BaseInput
                     className={form_label}
                     type="password"
-                    name={USER_PASSWORD}
+                    name={userInputEnums.USER_PASSWORD}
                     placeholder="Password"
                     onChange={handleInput} value={userPassword}
                 />
@@ -84,14 +80,14 @@ export function CreateUserForm(){
                 <BaseInput
                     className={form_label}
                     type="password"
-                    name={USER_CONFIRM_PASSWORD}
+                    name={userInputEnums.USER_CONFIRM_PASSWORD}
                     placeholder="Confirm Password"
                     onChange={handleInput} value={confirmPassword}
                 />
                 {/* <BaseInput
                     className={form_label}
                     type="text"
-                    name={USER_CLASS_ID}
+                    name={userInputEnums.USER_CLASS_ID}
                     placeholder="Class ID"
                     onChange={handleInput} value={userClassId}
                 /> */}
