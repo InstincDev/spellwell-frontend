@@ -15,12 +15,14 @@ import {
 import { BaseInput } from "../../";
 import userInputEnums from "../../../utils/userInputEnums";
 
+// ToDo
+// refactor other form inputs
+// replace inputs with BaseInput components
+// remove and replace ToolTip components
+
+// Add ClassId input for users
+
 export function CreateUserForm() {
-    const [userName, setUserName] = useState("");
-    const [userEmail, setUserEmail] = useState("");
-    const [userPassword, setUserPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    // const [userClassId, setUserClassId] = useState("")
     const [userType, setUserType] = useState("select");
 
     function handleSubmit(e) {
@@ -34,28 +36,6 @@ export function CreateUserForm() {
         console.log("Submitted");
     }
 
-    function handleInput(e) {
-        const { name, value } = e.target;
-        switch (name) {
-            case userInputEnums.USER_NAME:
-                setUserName(value);
-                break;
-            case userInputEnums.USER_EMAIL:
-                setUserEmail(value);
-                break;
-            case userInputEnums.USER_PASSWORD:
-                setUserPassword(value);
-                break;
-            case userInputEnums.USER_CONFIRM_PASSWORD:
-                setConfirmPassword(value);
-                break;
-            case userInputEnums.USER_TYPE:
-                setUserType(value);
-                break;
-            default:
-                console.log("handle input error");
-        }
-    }
 
     return (
         <form onSubmit={handleSubmit} className={create_test_form}>
@@ -65,7 +45,7 @@ export function CreateUserForm() {
                 <select
                     name={userInputEnums.USER_TYPE}
                     id=""
-                    onChange={handleInput}
+                    onChange={(e)=> setUserType(e.target.value)}
                     value={userType}
                 >
                     <option value="select" aria-disabled hidden>
@@ -76,46 +56,41 @@ export function CreateUserForm() {
                     <option value="parent">Parent</option>
                 </select>
             </div>
+            
             <div className={base_input_wrapper}>
                 <BaseInput
                     className={form_label}
                     type="text"
                     name={userInputEnums.USER_NAME}
-                    placeholder="Full Name"
-                    onChange={handleInput}
-                    value={userName}
+                    placeholder="Full Name"    
                 />
+
                 <BaseInput
                     className={form_label}
                     type="email"
                     name={userInputEnums.USER_EMAIL}
-                    placeholder="Email"
-                    onChange={handleInput}
-                    value={userEmail}
+                    placeholder="Email" 
                 />
+
                 <BaseInput
                     className={form_label}
                     type="password"
                     name={userInputEnums.USER_PASSWORD}
                     placeholder="Password"
-                    onChange={handleInput}
-                    value={userPassword}
                 />
 
                 <BaseInput
                     className={form_label}
                     type="password"
                     name={userInputEnums.USER_CONFIRM_PASSWORD}
-                    placeholder="Confirm Password"
-                    onChange={handleInput}
-                    value={confirmPassword}
+                    placeholder="Confirm Password"  
                 />
+
                 {/* <BaseInput
                     className={form_label}
                     type="text"
                     name={userInputEnums.USER_CLASS_ID}
                     placeholder="Class ID"
-                    onChange={handleInput} value={userClassId}
                 /> */}
             </div>
 
