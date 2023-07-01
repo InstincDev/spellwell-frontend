@@ -1,12 +1,17 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { ExampleAtom, ExampleMolecule, ExampleOrganism } from "./components";
+import { HomePage, TestPage, LoginLogoutSignup } from "./pages";
 
 function App() {
     return (
         <div className="App">
-            <ExampleAtom />
-            <ExampleMolecule />
-            <ExampleOrganism />
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/test" element={<TestPage />} />
+                    <Route path="/user" element={<LoginLogoutSignup/>}/>
+                </Routes>
+            </BrowserRouter>
         </div>
     );
 }
