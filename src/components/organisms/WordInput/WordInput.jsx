@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { InputToolTip } from "../../atoms";
 import { WordList } from "../../molecules";
 import {word_input, word_submit_button} from "./WordInput.module.sass"
 import {form_label, form_button} from "../../../styling/form.module.sass"
@@ -11,13 +10,13 @@ import {form_label, form_button} from "../../../styling/form.module.sass"
 */
 
 export function WordInput({ 
-    title,
-    formWordError,
-    wordList,
-    addWord,
-    deleteWord
-      }) {
-    
+  title,
+  formWordError,
+  wordList,
+  addWord,
+  deleteWord
+}) {
+
     // INPUT STATE
     const [word, setWord] = useState("");
     const [sentence, setSentence] = useState("");

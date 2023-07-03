@@ -1,20 +1,21 @@
-import {word_list, delete_word} from "./WordList.module.sass"
+import {word_list } from "./WordList.module.sass"
+import { Word } from "../../";
 
-export function WordList({ wordList, deleteWord }) {
-    function handleOnClick(index) {
-        deleteWord(index);
-    }
-    return (
-        <ul className={word_list}>
-            {wordList.map(({ word, sentence }, i) => (
-                <li key={`wordList-${i}`}>
-                    <p>Word: {word}</p>
-                    <p>Sentence: {sentence}</p>
-                    <button  className={delete_word} type="button" onClick={() => handleOnClick(i)}>
-                        Delete
-                    </button>
-                </li>
-            ))}
-        </ul>
-    );
+export function WordList({list, deleteWord}) {
+ 
+  return (
+    <ul className={word_list}>
+      {
+        list?.map(({word, sentence}, index) => 
+          <Word
+            key={`Word-${index}`}
+            word={word}
+            sentence={sentence}
+            deleteWord={()=> deleteWord(index)}
+          />
+        )
+      }
+    </ul>
+  );
 }
+
