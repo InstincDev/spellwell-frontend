@@ -1,118 +1,134 @@
 import { useState } from "react";
-import { AddWords, WordInput } from "../../";
+import { BaseInput, WordList } from "../../";
 import { postTest } from "../../../utils/serverRequest";
-import{create_test_form, form_head, form_label, form_button} from "../../../styling/form.module.sass"
-
-/*
-    TODO:
-         - Validate :)
-            - Title string length
-         - SASS  
-*/
+import{create_test_form, form_button} from "../../../styling/form.module.sass"
 
 const BASE_WORD_LENGTH = 2;
 const CHALLENGE_WORD_LENGTH = 1;
 const TEACHERID = "64441ddc819c4a0efbd2e075";
 
 export function CreateTestForm() {
-    // TITLE STATE
-    const [testTitle, setTestTitle] = useState("");
-    // WORD LIST STATE
-    const [baseWordList, setBaseWordList] = useState([]);
-    const [challengeWordList, setChallengeWordList] = useState([]);
-    // ERROR STATE
-    const [formBaseWordError, setFormBaseWordError] = useState(null);
-    const [formChallengeWordError, setFormChallengeWordError] = useState(null);
+  const [testTitle, setTestTitle] = useState("");
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        // check if baseWordList && challengeWordList are of correct length
-        // if baseWordList is not of length -> show InputToolTip w/ message
-        // if challengeWordList is not of length -> show InputToolTip w/ message
+  // Word Inputs
+  const [baseWordInput, setBaseWordInput] = useState("")
+  const [challengeWordInput, setChallengeWordInput] = useState("")
 
-        let isError = false;
+  // Word Sentences
+  const [baseWordSentenceInput, setBaseWordSentenceInput] = useState("")
+  const [challengeWordSentenceInput, setChallengeWordSentenceInput] = useState("")
 
-        // Check the base and challenge word list length and set error state string if either list length is wrong
-        if (
-            baseWordList.length !== BASE_WORD_LENGTH ||
-            challengeWordList.length !== CHALLENGE_WORD_LENGTH
-        ) {
-            isError = false;
-            if (baseWordList.length > BASE_WORD_LENGTH) {
-                setFormBaseWordError("Too Many Base Words");
-            }
-            if (baseWordList.length < BASE_WORD_LENGTH) {
-                setFormBaseWordError("Too Few Base Words");
-            }
-            if (challengeWordList.length > CHALLENGE_WORD_LENGTH) {
-                setFormChallengeWordError("Too Many Challenge Words");
-            }
-            if (challengeWordList.length < CHALLENGE_WORD_LENGTH) {
-                setFormChallengeWordError("Too Few Challenge Words");
-            }
-        }
-        // Short circuit if any of the lists have an error
-        if (isError) {
-            console.log("we have an ERROR");
-            return;
-        }
+  // Word Lists
+  const [baseWordList, setBaseWordList] = useState([]);
+  const [challengeWordList, setChallengeWordList] = useState([]);
 
-        // Post request
-        await postTest({
-            title: testTitle,
-            baseWords: baseWordList,
-            challengeWords: challengeWordList,
-            teacherId: TEACHERID,
-        });
-    };
+  const addBaseWord = () => {
+    setBaseWordList([...baseWordList, {word:baseWordInput, sentence:baseWordSentenceInput}])
+    setBaseWordInput("")
+    setBaseWordSentenceInput("")
+  }
+  const deleteBaseWord = (wordIndex) => {
+    if (baseWordList.length == 1) {
+      setBaseWordList([])
+      return
+    } 
+    setBaseWordList(...baseWordList.filter((_,index)=> index !== wordIndex))
+  }
 
-    function addBaseWord(baseWordObj) {
-        setBaseWordList([...baseWordList, baseWordObj]);
-        setFormBaseWordError(null);
+  const addChallengeWord = () => {
+    setChallengeWordList([...challengeWordList, {word:challengeWordInput, sentence:challengeWordSentenceInput}])
+    setChallengeWordInput("")
+    setChallengeWordSentenceInput("")
+  }
+  const deleteChallengeWord = (wordIndex) => {
+    if (challengeWordList.length == 1) {
+      setChallengeWordList([])
+      return
     }
+    setChallengeWordList(...challengeWordList.filter((_,index)=> index !== wordIndex))
+  }
 
-    function addChallengeWord(challengeWordObj) {
-        setChallengeWordList([...challengeWordList, challengeWordObj]);
-        setFormChallengeWordError(null);
-    }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    function deleteBaseWord(index) {
-        let arr = [...baseWordList];
-        arr.splice(index, 1);
-        setBaseWordList(arr);
-        setFormBaseWordError(null);
-    }
+    if (isError()) return
 
-    function deleteChallengeWord(index) {
-        let arr = [...challengeWordList];
-        arr.splice(index, 1);
-        setChallengeWordList(arr);
-        setFormChallengeWordError(null);
-    }
+    // Post request
+    await postTest({
+      title: testTitle,
+      baseWords: baseWordList,
+      challengeWords: challengeWordList,
+      teacherId: TEACHERID,
+    });
+  };
 
-    return (
-        <form className={create_test_form} onSubmit={handleSubmit}>
-            <label htmlFor="title" className={form_label}>
-                Test Title
-                <input type="title" name="title" placeholder="Title" onChange={(e)=> setTestTitle(e.target.value)} value={testTitle}/>
-            </label>
-            <WordInput
-                title={"Base"}
-                formWordError={formBaseWordError}
-                wordList={baseWordList}
-                addWord={addBaseWord}
-                deleteWord={deleteBaseWord}
-            />
+  return (
+    <form className={create_test_form} onSubmit={handleSubmit}>
+      <BaseInput name="title" type="text" placeholder="Test Title Goes Here :)" value={testTitle} setValue={setTestTitle} />
+      { /* Should this be componentized? */ }
+      <div>
+        <WordList list={baseWordList} deleteWord={deleteBaseWord}/>
+        <BaseInput 
+          name="baseWordInput" 
+          type="text" 
+          placeholder="New Word Goes Here :)" 
+          value={baseWordInput} 
+          setValue={setBaseWordInput}
+        />
+        <BaseInput 
+          name="baseWordSentenceInput" 
+          type="text" 
+          placeholder="New Sentence Goes Here :)" 
+          value={baseWordSentenceInput} 
+          setValue={setBaseWordSentenceInput} 
+        />
+        <button type="button" onClick={addBaseWord} disabled={baseWordInput.length < 2 || baseWordSentenceInput.length < 2}>Add Word</button>
+      </div>
 
-            <WordInput
-                title={"Challenge"}
-                formWordError={formChallengeWordError}
-                wordList={challengeWordList}
-                addWord={addChallengeWord}
-                deleteWord={deleteChallengeWord}
-            />
+      <div>
+        <WordList list={challengeWordList} deleteWord={deleteChallengeWord}/>
+        <BaseInput 
+          name="challengeWordInput" 
+          type="text"
+          placeholder="New Word Goes Here :)"
+          value={challengeWordInput}
+          setValue={setChallengeWordInput}
+        />
+        <BaseInput
+          name="challengeWordSentenceInput"
+          type="text"
+          placeholder="New Sentence Goes Here :)"
+          value={challengeWordSentenceInput}
+          setValue={setChallengeWordSentenceInput}
+        />
+        <button type="button" onClick={addChallengeWord} disabled={challengeWordInput.length < 2 || challengeWordSentenceInput.length < 2}>Add Word</button>
+      </div>
+      { /* */}
+      <button className={form_button} type="submit" >Form Submit</button>
+    </form>
+  );
+}
 
-            <button className={form_button} type="submit">Form Submit</button>
-        </form>
-    );
+// TODO: Replace this with validation function you can pass into the onValidation check for inputs.
+function isError(baseWordList, challengeWordList){
+  let isError = false;
+  let errorMessage = ""
+
+  // Check the base and challenge word list length and set error state string if either list length is wrong
+  if (
+    baseWordList.length !== BASE_WORD_LENGTH ||
+    challengeWordList.length !== CHALLENGE_WORD_LENGTH
+  ) {
+    if (baseWordList.length > BASE_WORD_LENGTH) errorMessage = "Too Many Base Words"
+    if (baseWordList.length < BASE_WORD_LENGTH) errorMessage = "Too Few Base Words"
+    if (challengeWordList.length > CHALLENGE_WORD_LENGTH) errorMessage = "Too Many Challenge Words"
+    if (challengeWordList.length < CHALLENGE_WORD_LENGTH) errorMessage = "Too Few Challenge Words"
+  }
+  // Short circuit if any of the lists have an error
+  if (isError) {
+    console.log("we have an ERROR");
+    return true
+  }
+
+  return false
 }
